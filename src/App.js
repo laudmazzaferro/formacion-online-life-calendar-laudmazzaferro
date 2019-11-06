@@ -9,7 +9,16 @@ class App extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      dates:[],
+      dates:[
+        {date:'12-02-2019',
+         state:'happy',
+         message:'ggg'
+        },
+        {date:'12-04-2019',
+         state:'sad',
+         message:'-'
+        }
+      ],
     }
 
   }
@@ -22,7 +31,7 @@ class App extends React.Component{
         <Switch>
           <Route exact path="/" render={() => {
             return (
-              <CalendarDates></CalendarDates>
+              <CalendarDates dates={this.state.dates}></CalendarDates>
             )
             }}
           />
