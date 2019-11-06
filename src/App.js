@@ -18,9 +18,14 @@ class App extends React.Component{
          state:'sad',
          message:'-'
         }
-      ],
+      ]
     }
+    this.saveDate=this.saveDate.bind(this);
 
+  }
+
+  saveDate(){
+   
   }
 
   render (){
