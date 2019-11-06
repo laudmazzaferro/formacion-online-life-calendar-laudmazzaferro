@@ -9,23 +9,40 @@ class App extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      dates:[
-        {date:'12-02-2019',
-         state:'happy',
-         message:'ggg'
-        },
-        {date:'12-04-2019',
-         state:'sad',
-         message:'-'
-        }
-      ]
+      dates:[]
     }
     this.saveDate=this.saveDate.bind(this);
+    this.getState=this.getState.bind(this);
 
   }
 
-  saveDate(){
-   
+  componentDidMount(){
+    this.getState();
+  }
+
+  getState(){
+    const updateState = JSON.parse(localStorage.getItem('User'));
+    if (updateState ) {
+      this.setState({
+        dates:updateState.dates
+      })
+    }
+  }
+
+  saveDate(newInformation){
+    this.setState((prevState => {
+      const { dates } = prevState
+
+      dates.push(newInformation);
+
+      return {
+        ...prevState,
+        dates:dates
+      }
+    }),
+    () => {
+      localStorage.setItem('User', JSON.stringify(this.state));
+    });
   }
 
   render (){
@@ -44,7 +61,7 @@ class App extends React.Component{
         <Switch>
           <Route  path="/add-dates" render={() => {
             return (
-              <AddDate></AddDate>
+              <AddDate saveDate={this.saveDate}></AddDate>
             )
             }}
           />

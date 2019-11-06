@@ -7,9 +7,16 @@ import { Link } from 'react-router-dom';
 class AddDate extends React.Component {
   constructor(props){
     super(props);
-    this.state={}
+    this.state={
+      date:'',
+      state:'',
+      message:''
+    }
     this.getInputValue= this.getInputValue.bind(this);
+    this.sendState= this.sendState.bind(this);
   }
+
+  
 
   getInputValue(event){
     const {value}= event.currentTarget
@@ -17,6 +24,17 @@ class AddDate extends React.Component {
     this.setState({
       [name]:value
     })
+  }
+
+  sendState(){
+    const {date , state , message}=this.state
+    const {saveDate}=this.props
+     const newDate={
+      date:date,
+      state:state,
+      message:( state === 'sad' )? '' : message
+    }
+    saveDate(newDate);
   }
   render() {
     return (
@@ -46,11 +64,15 @@ class AddDate extends React.Component {
             :(
           </label>
         </div>
-      
-      <label htmlFor="message">Mensaje:</label>
-      <input type="text" name="message"onChange={this.getInputValue}/>
-      <Link to="/">
+      {(this.state.state === 'happy') ? 
         <div>
+       <label htmlFor="message">Mensaje:</label>
+       <input type="text" name="message"onChange={this.getInputValue}/> 
+       </div>
+       : ''}
+      
+      <Link to="/">
+        <div onClick={this.sendState}>
           Guardar
         </div>
       </Link>
